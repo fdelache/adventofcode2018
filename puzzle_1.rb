@@ -39,7 +39,7 @@ class Puzzle1
 
 	def solve
 		puts "Day 1 puzzle 1 answer is: #{Puzzle1.get_end_frequency(lines)}"
-		puts "Answer to day 1 puzzle 2 is: #{Puzzle1.get_first_duplicate_frequency(lines)}"
+		puts "Day 1 puzzle 2 answer is: #{Puzzle1.get_first_duplicate_frequency(lines)}"
 	end
 
 	def self.run

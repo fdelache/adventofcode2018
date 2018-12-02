@@ -8,5 +8,5 @@ end
 task :default => [:run]
 
 task :run do
-	ruby "puzzle_1.rb"
+	ruby "app.rb"
 end
