@@ -7,11 +7,11 @@ class Puzzle1
 		@lines = lines
 	end
 
-	def self.get_end_frequency(lines)
+	def get_end_frequency
 		lines.reduce(0) { |accum, line| accum + line.to_i }
 	end
 
-	def self.get_first_duplicate_frequency(lines)
+	def get_first_duplicate_frequency
 		seen_frequencies = [0]
 		
 		loop do
@@ -20,10 +20,10 @@ class Puzzle1
 				accum << frequency
 			end
 
-			break if get_first_duplicate(seen_frequencies)
+			break if Puzzle1.get_first_duplicate(seen_frequencies)
 		end
 
-		get_first_duplicate(seen_frequencies)
+		Puzzle1.get_first_duplicate(seen_frequencies)
 	end
 
 	def self.get_first_duplicate(frequencies)
@@ -38,8 +38,8 @@ class Puzzle1
 	end
 
 	def solve
-		puts "Day 1 puzzle 1 answer is: #{Puzzle1.get_end_frequency(lines)}"
-		puts "Day 1 puzzle 2 answer is: #{Puzzle1.get_first_duplicate_frequency(lines)}"
+		puts "Day 1 puzzle 1 answer is: #{get_end_frequency}"
+		puts "Day 1 puzzle 2 answer is: #{get_first_duplicate_frequency}"
 	end
 
 	def self.run

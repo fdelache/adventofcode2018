@@ -13,7 +13,17 @@ class Puzzle2Test < Minitest::Test
 	end
 
 	def test_checksum
-		assert_equal 12, Puzzle2.checksum_box_ids(["abcdef", "bababc", "abbcde", "abcccd", "aabcdd", "abcdee", "ababab"])		
+		assert_equal 12, Puzzle2.new(["abcdef", "bababc", "abbcde", "abcccd", "aabcdd", "abcdee", "ababab"]).checksum_box_ids
+	end
+
+	def test_get_one_letter_close_ids
+		assert_equal ["fghij", "fguij"], Puzzle2.new(["abcde", "fghij", "klmno", "pqrst", "fguij", "axcye", "wvxyz"])
+								.get_one_letter_close_ids
+	end
+
+	def test_get_close_ids_common_letter
+		assert_equal "fgij", Puzzle2.new(["abcde", "fghij", "klmno", "pqrst", "fguij", "axcye", "wvxyz"])
+								.get_close_ids_common_letters
 	end
 end
 
