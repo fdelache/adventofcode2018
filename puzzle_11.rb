@@ -42,7 +42,8 @@ class Grid
 
 		if !cache_power_cell_square[[x-1,y,square_size]].nil?
 			sum = (y..(y+square_size - 1)).reduce(cache_power_cell_square[[x-1,y,square_size]]) do |accum, suby|
-				accum = accum - cells[[x-1,y]].power + cells[[x+square_size-1, y]].power
+				accum = accum - cells[[x-1,suby]].power + cells[[x+square_size-1, suby]].power
+                                accum
 			end
 		else
 			(x..(x+square_size - 1)).each do |x|
@@ -60,8 +61,8 @@ class Grid
 	def find_max_cell_square(square_size: 3)
 		max = 0
 		found_x, found_y = 0
-		(1..(300-square_size+1)).each do |x|
-			(1..(300-square_size+1)).each do |y|
+		(1..(300-square_size+1)).each do |y|
+			(1..(300-square_size+1)).each do |x|
 				power = power_cell_square(x, y, square_size: square_size)
 				if power > max
 					max = power 
@@ -83,7 +84,7 @@ class Grid
 		found_square_size = 0
 		minimum_square_size = 0
 
-		200.downto(1).each do |square_size|
+		300.downto(1).each do |square_size|
 			break if square_size <= minimum_square_size
 
 			x, y, max = find_max_cell_square(square_size: square_size)
