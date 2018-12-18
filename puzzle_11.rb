@@ -84,7 +84,7 @@ class Grid
 		found_square_size = 0
 		minimum_square_size = 0
 
-		300.downto(1).each do |square_size|
+                (1..300).each do |square_size|
 			break if square_size <= minimum_square_size
 
 			x, y, max = find_max_cell_square(square_size: square_size)
