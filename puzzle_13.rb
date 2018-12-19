@@ -49,6 +49,20 @@ class Map
     false
   end
 
+  def ticks_remove_collisions
+    carts.each do |cart|
+      cart.move(tracks)
+      remove_collisions
+    end
+
+    @tick += 1
+    carts.size == 1
+  end
+
+  def remove_collisions
+    @carts = carts - collisions
+  end
+
   def collisions
     carts - carts.uniq { |cart| [cart.x, cart.y] }
   end
@@ -153,9 +167,9 @@ end
 map = Map.new('./data/day_13_input')
 
 loop do
-  break if map.ticks
+  break if map.ticks_remove_collisions
 
   p map.carts
 end
 
-puts "Collision during tick #{map.tick} at #{map.collisions}"
+puts "Last cart at #{map.tick} is #{map.carts}"
