@@ -13,7 +13,7 @@ class Rule
 	def self.parse(line)
 		matcher = line.match(/(?<match_state>[\.#]{5}) => (?<new_state>[\.#])/)
 		next_pot_state = Pot.new(matcher[:new_state] == "#")
-		
+
 		match_state = matcher[:match_state]
 		pot_state = []
 		match_state.each_char do |c|
@@ -78,7 +78,7 @@ class Generation
 	end
 
 	def print
-		puts "#{number}: #{state.values.map(&:print).join}"
+		puts "#{number}: #{state.keys.min} #{state.values.map(&:print).join}"
 	end
 end
 
@@ -93,8 +93,8 @@ rules = sample.each_with_object([]) do |line, accum|
 	accum << Rule.parse(line)
 end
 
-50000000000.times { |i| generation.next_generation(rules); generation.print if ((i % 1000) == 0) }
-# generation.print
+500.times { |i| generation.next_generation(rules); generation.print }
+generation.print
 
 # binding.pry
 puts "After 50000000000 iterations, sum is #{generation.sum}"
