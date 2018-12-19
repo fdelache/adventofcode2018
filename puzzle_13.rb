@@ -93,9 +93,9 @@ class Cart
       @y += 1
       case tracks[[x,y]]
       when :turn_45
-        @direction = :right
-      when :turn_135
         @direction = :left
+      when :turn_135
+        @direction = :right
       when :cross
         case last_cross
         when :right
@@ -154,6 +154,8 @@ map = Map.new('./data/day_13_input')
 
 loop do
   break if map.ticks
+
+  p map.carts
 end
 
 puts "Collision during tick #{map.tick} at #{map.collisions}"
