@@ -119,6 +119,7 @@ class Unit
   end
 
   def get_path(target)
+    # TODO - get shortest path here.
     # Return array of positions
     []
   end
@@ -128,7 +129,7 @@ class Unit
   end
 
   def reachable(target)
-    # TODO
+    # TODO - Check if there is a path
     true
   end
 
