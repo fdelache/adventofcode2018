@@ -50,17 +50,42 @@ class Map
   end
 
   def ticks_remove_collisions
-    carts.each do |cart|
+    i = 0
+    @carts = carts.sort
+    
+    loop do
+      cart = carts[i]
+
       cart.move(tracks)
-      remove_collisions
+
+      # binding.pry if collision?
+
+      carts_to_remove = carts.find_all { |c| (c.x == cart.x) && (c.y == cart.y) }
+      if carts_to_remove.size > 1
+        current_index = i
+        carts_to_remove.each do |c|
+          if carts.index(c) <= current_index
+            i -= 1
+          end
+        end
+        @carts = carts - carts_to_remove
+      end
+
+      i += 1
+      break if i >= carts.size
     end
 
     @tick += 1
-    carts.size == 1
+    carts.size <= 1
   end
 
   def remove_collisions
-    @carts = carts - collisions
+    @carts = carts.find_all do |cart|
+      count = carts.count do |subcart|
+        (subcart.x == cart.x) && (subcart.y == cart.y)
+      end
+      count == 1
+    end
   end
 
   def collisions
@@ -80,6 +105,11 @@ class Cart
     @y = y
     @direction = direction
     @last_cross = :right
+  end
+
+  def <=>(other)
+    a = y <=> other.y
+    a == 0 ? (x <=> other.x) : a
   end
 
   def move(tracks)
@@ -165,7 +195,9 @@ class Cart
 end
 
 map = Map.new('./data/day_13_input')
+# map = Map.new('./data/day_13_sample2')
 
+# binding.pry
 loop do
   break if map.ticks_remove_collisions
 
