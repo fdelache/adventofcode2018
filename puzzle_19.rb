@@ -173,7 +173,8 @@ class Program
 	def execute_program
 		instruction_pointer = 3
 		registers = Array.new(6) { 0 }
-		registers = [2637831, 3, 10551319, 10551320, 0, 2637830]
+		# registers = [2637831, 3, 10551319, 10551320, 0, 2637830]
+		registers = [0, 3, 10551320, 10551320, 0, 1]
 
 		loop do
 			break if (instruction_pointer < 0) || (instruction_pointer >= instructions.length)
@@ -191,6 +192,45 @@ class Program
 
 		puts "Registers: #{registers}"
 	end
+
+	def execute_optimized_program
+		instruction_pointer = 3
+		r = [0, 3, 1, 10551320, 10550400, 1]
+
+		loop do
+			r[4] = r[5] * r[2]	# Instruction 3
+			if r[4] == r[3]		# Instruction 4
+				# Instruction 7
+				r[0] += r[5]
+			end
+
+			# Instruction 6 - Skipped
+			# Instruction 8
+			r[2] += 1
+
+			if r[2] > r[3]	#Instruction 9
+				# Instruction 12
+				r[5] += 1
+
+				if r[5] > r[3]	# Instruction 13
+					# Instruction 16 -> Exit
+					break
+				else
+					# Instruction 15 -> Jump to 2
+					r[2] = 1	# Instruction 2
+				end
+			end
+		end
+	end
+
+	def part2
+		num = 10551320
+		factors = (1..num).select { |n| num % n == 0 }
+
+		sum_of_factors = factors.reduce(&:+)
+
+		puts "Part 2 answer is: #{sum_of_factors}"
+	end
 end
 
 
@@ -207,4 +247,5 @@ EOS
 
 program = Program.parse('./data/day_19_input')
 # program = Program.new(SAMPLE.split("\n"))
-program.execute_program
+# program.execute_program
+program.part2
